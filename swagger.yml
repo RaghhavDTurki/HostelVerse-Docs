@@ -1,0 +1,694 @@
+openapi: 3.0.0
+info:
+  description: |
+    This the backend server for HostelVerse, a Hostel Management System. 
+    Tech Stack: Typescript, Azure Functions, Azure CosmosDB
+  version: "1.0.0"
+  title: Hostelverse-Backend
+  contact:
+    email: raghhavdturki@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/RaghhavDTurki/AAAA/1.0.0
+  - description: Development Server
+    url: http://localhost:7071/api/
+  - description: Production Server
+    url: https://hostelverse-backend.azurewebsites.net/api/
+paths:
+  /student/signup:
+    post:
+      tags:
+        - signup
+      summary: Student Signup
+      operationId: studentSignup
+      requestBody:
+        $ref: '#/components/requestBodies/CreateStudentInput'
+      responses:
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Student Created Successfully
+  /createAdmin:
+    post: 
+      tags:
+        - signup
+      summary: Create Admin Account
+      operationId: createAdmin
+      requestBody:
+        $ref: '#/components/requestBodies/AdminSignupInput'
+      responses:
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Admin Created Successfully
+  /createHostel:
+    post:
+      tags:
+        - hostel
+      summary: Create Hostel 
+      operationId: createHostel
+      security: 
+        - bearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/CreateHostelInput'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Hostel Created Successfully
+  /login:
+    post:
+      tags:
+        - login
+      summary: login
+      operationId: login
+      requestBody:
+        $ref: '#/components/requestBodies/LoginInput'
+      responses:
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Logged In Successfully!
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/LoginResponse'
+  /createWarden:
+    post:
+      tags: 
+        - warden
+      summary: Create Warden Account
+      security: 
+        - bearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/CreateWardenInput'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Warden Created Successfully
+  /createRoom:
+    post:
+      tags:
+        - room
+      summary: Create Room 
+      security: 
+        - bearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/CreateRoomInput'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Room Created Successfully
+  /createRoomIssue:
+    post:
+      tags:
+        - room
+      summary: Create a Room Issue
+      security: 
+        - bearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/CreateRoomIssueInput'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Room Issue Created Successfully
+  /createFeedback:
+    post:
+      tags: 
+        - feedback
+      security: 
+        - bearerAuth: []
+      summary: Create Feedback for a Hostel
+      requestBody:
+        $ref: '#/components/requestBodies/CreateFeedbackInput'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Feedback Created Successfully
+  /createLeaveApplication:
+    post:
+      tags: 
+        - Leave Application
+      security: 
+      - bearerAuth: []
+      summary: Create a Leave Application
+      requestBody:
+        $ref: '#/components/requestBodies/CreateLeaveApplicationInput'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Leave Application Created Successfully
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        studentid:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        roomid:
+          type: string
+        hostelid:
+          type: string
+        emailToken:
+          type: integer
+          format: int64
+          nullable: true
+        emailTokenExpires:
+          type: string
+          format: date-time
+          nullable: true
+        resetPasswordToken:
+          type: string
+          nullable: true
+        resetPasswordExpires: 
+          type: string
+          nullable: true
+        batch: 
+          type: string
+        role: 
+          type: string
+          default: student
+        active:
+          type: boolean
+        distance:
+          type: number
+          format: float
+        profile:
+          type: object
+          properties:
+            name:
+              type: string
+            gender: 
+              type: string
+            email: 
+              type: string
+            contactno:
+              type: string
+            location:
+              type: string
+    Warden:
+      type: object
+      properties:
+        wardenid:
+          type: string
+        name: 
+          type: string
+        email: 
+          type: string
+        password: 
+          type: string
+        resetPasswordToken:
+          type: string
+          nullable: true
+        resetPasswordExpires: 
+          type: string
+          nullable: true
+        role:
+          type: string
+          default: Warden
+        hostelid:
+          type: string
+        profile: 
+          type: object
+          properties:
+            name: 
+              type: string
+            email: 
+              type: string
+            contactno: 
+              type: string
+    Admin:
+      type: object
+      properties:
+        adminid:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        resetPasswordToken:
+          type: string
+          nullable: true
+        resetPasswordExpires: 
+          type: string
+          nullable: true
+        role:
+          type: string
+          default: Admin
+        profile:
+          type: object
+          properties:
+            name: 
+              type: string
+            email: 
+              type: string
+            contactno: 
+              type: string
+    Hostel:
+      type: object
+      properties:
+        hostelid:
+          type: string
+        name:
+          type: string
+        location:
+          type: string
+        wardenid: 
+          type: string
+          nullable: true
+        description:
+          type: string
+        totalCapacity:
+          type: integer
+          format: int32
+        singleRooms: 
+          type: integer
+          format: int32
+          default: 0
+        doubleRooms: 
+          type: integer
+          format: int32
+          default: 0
+        tripleRooms: 
+          type: integer
+          format: int32
+          default: 0
+        singleRoomsLeft: 
+          type: integer
+          format: int32
+        doubleRoomsLeft: 
+          type: integer
+          format: int32
+        tripleRoomsLeft: 
+          type: integer
+          format: int32
+        fees: 
+          type: integer
+          format: int32
+        overallRating: 
+          type: number
+          format: float
+        numberOfReviews:
+          type: integer
+          format: int32
+        image:
+          type: string
+    Room:
+      type: object
+      properties:
+        hostelid:
+          type: string
+        roomno:
+          type: string
+        allotrmentStatus:
+          type: boolean
+          default: false
+        type:
+          type: string
+          description: Specifies the room type,such as single, double or triple
+        occupants:
+          description: Array of student id's occupying the room
+          type: array
+          items:
+            type: string
+    RoomIssue:
+      type: object
+      properties:
+        hostelid:
+          type: string
+        roomno:
+          type: string
+        remarks:
+          type: string
+        created_at: 
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [Pending, Resolved]
+          default: Pending
+    LeaveApplication:
+      type: object
+      properties:
+        studentid:
+          type: string
+        hostelid: 
+          type: string
+        message:
+          type: string
+        date_from:
+          type: string
+          format: date-time
+        date_to: 
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [Pending, Approved, Rejected]
+          default: Pending
+        remarks:
+          type: string
+          nullable: true
+        seenBy:
+          type: string
+          description: The wardenid of the warden that approved/rejected the application
+    Feedback:
+      type: object
+      properties:
+        studentid:
+          type: string
+        name:
+          type: string
+        hostelid: 
+          type: number
+        message:
+          type: string
+        rating: 
+          type: number
+          format: float
+    Attendence:
+      type: object
+      properties:
+        studentid: 
+          type: string
+        last_checkin: 
+          type: string
+          format: date-time
+          nullable: true
+        last_checkout: 
+          type: string
+          format: date-time
+          nullable: true
+    Announcement:
+      type: object
+      properties:
+        hostelid:
+          type: string
+        wardenid:
+          type: string
+        heading:
+          type: string
+        message:
+          type: string
+    CreateStudentInput:
+      type: object
+      properties:
+        studentid: 
+          type: string
+        email: 
+          type: string
+        password: 
+          type: string
+        name: 
+          type: string
+        gender: 
+          type: string
+        contactno: 
+          type: string
+        location: 
+          type: string
+    CreateHostelInput:
+      type: object
+      properties:
+        hostelid:
+          type: string
+        name:
+          type: string
+        location:
+          type: string
+        wardenid: 
+          type: string
+        description:
+          type: string
+        totalCapacity:
+          type: integer
+          format: int32
+        singleRooms: 
+          type: integer
+          format: int32
+          default: 0
+        doubleRooms: 
+          type: integer
+          format: int32
+          default: 0
+        tripleRooms: 
+          type: integer
+          format: int32
+          default: 0
+        singleRoomsLeft: 
+          type: integer
+          format: int32
+        doubleRoomsLeft: 
+          type: integer
+          format: int32
+        tripleRoomsLeft: 
+          type: integer
+          format: int32
+        fees: 
+          type: integer
+          format: int32
+    AdminSignupInput:
+      type: object
+      properties: 
+        name: 
+          type: string
+        email: 
+          type: string
+        password: 
+          type: string
+        contactno: 
+          type: string
+        adminid: 
+          type: string
+    VerifyEmailInput:
+      type: object
+      properties: 
+        email:
+          type: string
+        code: 
+          type: integer
+          format: int32
+    LoginInput:
+      type: object
+      properties: 
+        email:
+          type: string
+        password: 
+          type: string
+    CreateWardenInput:
+      type: object
+      properties: 
+        wardenid:
+          type: string
+        email: 
+          type: string
+        password: 
+          type: string
+        name: 
+          type: string
+        contactno:
+          type: string
+        hostelid: 
+          type: string
+    CreateRoomInput:
+      type: object
+      properties: 
+        hostelid:
+          type: string
+        roomno: 
+          type: string
+        type: 
+          type: string
+          enum: [single, double, triple]
+          description: Specify the room type
+        updateOrAdd:
+          type: string
+          enum: [add, update]
+          description: Add-> Admin has to add another room which increases the capacity; Update-> The room is already included in the current Hostel document, but the admin wants to create that room inside the databse.
+    CreateRoomIssueInput:
+      type: object
+      properties:
+        hostelid: 
+          type: string
+        roomno:
+          type: string
+        remarks: 
+          type: string
+    CreateFeedbackInput:
+      type: object
+      properties: 
+        hostelid:
+          type: string
+        studentid: 
+          type: string
+        name:
+          type: string
+        rating: 
+          type: integer
+          format: int32
+        message:
+          type: string
+    CreateLeaveApplicationInput:
+      type: object
+      properties:
+        studentid: 
+          type: string
+        date_from: 
+          type: string
+          format: date-time
+        date_to:
+          type: string
+          format: date-time
+        message: 
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        profile: 
+          type: object
+        token: 
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Iron Sealed Token
+  requestBodies:
+    CreateStudentInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateStudentInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CreateStudentInput'
+      description: Signup properties for Student
+      required: true
+    CreateHostelInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateHostelInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CreateHostelInput'
+      required: true
+    AdminSignupInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AdminSignupInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/AdminSignupInput'
+      required: true
+    VerifyEmailInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VerifyEmailInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/VerifyEmailInput'
+      required: true
+    LoginInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/LoginInput'
+      required: true
+    CreateWardenInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateWardenInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CreateWardenInput'
+      required: true
+    CreateRoomInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateRoomInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CreateRoomInput'
+      required: true
+    CreateRoomIssueInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateRoomIssueInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CreateRoomIssueInput'
+      required: true
+    CreateFeedbackInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateFeedbackInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CreateFeedbackInput'
+      required: true
+    CreateLeaveApplicationInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateLeaveApplicationInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/CreateLeaveApplicationInput'
+      required: true
