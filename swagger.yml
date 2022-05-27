@@ -221,6 +221,8 @@ components:
           properties:
             name:
               type: string
+            studentid:
+              type: string
             gender: 
               type: string
             email: 
@@ -255,6 +257,8 @@ components:
           type: object
           properties:
             name: 
+              type: string
+            wardenid:
               type: string
             email: 
               type: string
@@ -519,6 +523,8 @@ components:
         email:
           type: string
         password: 
+          type: string
+        role: 
           type: string
     CreateWardenInput:
       type: object
