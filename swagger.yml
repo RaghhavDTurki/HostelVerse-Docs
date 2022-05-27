@@ -95,7 +95,6 @@ paths:
     post:
       tags: 
         - admin
-        - warden
       summary: Create Warden Account
       security: 
         - bearerAuth: []
@@ -113,7 +112,6 @@ paths:
   /createRoom:
     post:
       tags:
-        - room
         - admin
       summary: Create Room 
       security: 
@@ -132,7 +130,6 @@ paths:
   /createRoomIssue:
     post:
       tags:
-        - room
         - student
       summary: Create a Room Issue
       security: 
@@ -151,7 +148,6 @@ paths:
   /createFeedback:
     post:
       tags: 
-        - feedback
         - student
       security: 
         - bearerAuth: []
@@ -170,7 +166,6 @@ paths:
   /createLeaveApplication:
     post:
       tags: 
-        - Leave Application
         - student
       security: 
       - bearerAuth: []
@@ -204,8 +199,7 @@ paths:
     post:
       security: 
         - bearerAuth: []
-      tags: 
-        - warden
+      tags:
         - admin
       summary: Delete a Warden
       requestBody:
@@ -222,7 +216,6 @@ paths:
   /getAnnouncements:
     get:
       tags: 
-        - Announcement
         - warden
       security: 
         - bearerAuth: []
@@ -251,7 +244,6 @@ paths:
   /createAnnouncement:
     post:
       tags: 
-        - Announcement
         - warden
       security: 
         - bearerAuth: []
