@@ -271,6 +271,11 @@ paths:
           name: studentid
           schema:
             type: string
+        - in: query
+          name: wardenid
+          schema:
+            type: string
+          required: true
       responses:
         '400':
           description: Invalid input
@@ -357,7 +362,7 @@ paths:
         - in: query
           name: high
           schema: 
-            type: integer
+            type: string
       responses:
         '400':
           description: Invalid input
@@ -373,6 +378,148 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Hostel'
+  /getFeedback:
+    get:
+      tags: 
+        - admin
+      security: 
+        - bearerAuth: []
+      parameters: 
+        - in: query
+          name: feedbackid
+          schema:
+            type: string
+          description: Provide optional feedback id to get a specifc feedback, otherwise shows all the feedbacks
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Feedback List
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+  /getLeaveApplications:
+    get:
+      tags: 
+        - warden
+      security: 
+        - bearerAuth: []
+      description: Provide studentid to view the Leave Application of that student in the warden's hostel otherwise displays all the leave applications in the warden's hostel
+      parameters: 
+        - in: query
+          name: wardenid
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: studentid
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Leave Application List
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaveApplication'
+  /getRoomIssue:
+    get:
+      tags: 
+        - warden
+      security: 
+        - bearerAuth: []
+      description: Provide roomissueid to get a specifc room issue in the warden's hostel. Otherwise returns the full list of room issues
+      parameters: 
+        - in: query
+          name: wardenid
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: roomIssueId
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Room Issue List
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoomIssue'
+  /resolveRoomIssue:
+    post:
+      tags: 
+        - warden
+      security: 
+        - bearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateRoomIssue'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Room Issue Updated Successfully
+  /updateLeaveApplication:
+    post:
+      tags: 
+        - warden
+      security: 
+        - bearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateLeaveApplication'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Leave Application Updated Successfully
+  /allotHostel:
+    post:
+      tags: 
+        - admin
+      security: 
+        - bearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/AllotHostelInput'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorised Access!
+        '500':
+          description: Internal Server Error
+        '200':
+          description: Hostel Alloted Successfully
 components:
   schemas:
     Student:
@@ -791,6 +938,39 @@ components:
       properties:
         wardenid:
           type: string
+    UpdateRoomIssue:
+      type: object
+      properties:
+        hosteldid: 
+          type: string
+        roomno:
+          type: string
+        status:
+          type: string
+    UpdateLeaveApplication:
+      type: object
+      properties:
+        studentid: 
+          type: string
+        wardenid: 
+          type: string
+        name: 
+          type: string
+        status: 
+          type: string
+        remarks: 
+          type: string
+    AllotHostelInput:
+      type: object
+      properties:
+        hostelid:
+          type: array
+          items:
+            type: string
+        batch: 
+          type: array
+          items:
+            type: string
     LoginResponse:
       type: object
       properties:
@@ -914,4 +1094,28 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/DeleteWardenInput'
+    UpdateRoomIssue:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateRoomIssue'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/UpdateRoomIssue'
+    UpdateLeaveApplication:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateLeaveApplication'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/UpdateLeaveApplication'
+    AllotHostelInput:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllotHostelInput'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/AllotHostelInput'
       required: true
