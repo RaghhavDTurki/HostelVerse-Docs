@@ -363,7 +363,7 @@ paths:
         - in: query
           name: high
           schema: 
-            type: string
+            type: integer
       responses:
         '400':
           description: Invalid input
