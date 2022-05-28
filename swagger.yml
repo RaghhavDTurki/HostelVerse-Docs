@@ -350,6 +350,14 @@ paths:
           name: hostelid
           schema:
             type: string
+        - in: query
+          name: low
+          schema: 
+            type: integer
+        - in: query
+          name: high
+          schema: 
+            type: string
       responses:
         '400':
           description: Invalid input
@@ -672,15 +680,6 @@ components:
           type: integer
           format: int32
           default: 0
-        singleRoomsLeft: 
-          type: integer
-          format: int32
-        doubleRoomsLeft: 
-          type: integer
-          format: int32
-        tripleRoomsLeft: 
-          type: integer
-          format: int32
         fees: 
           type: integer
           format: int32
