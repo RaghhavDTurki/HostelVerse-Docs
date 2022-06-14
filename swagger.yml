@@ -1352,6 +1352,12 @@ components:
       properties:
         studentid: 
           type: string
+        name:
+          type: string
+        gender:
+          type: string
+        description:
+          type: string
         contatcno:
           type: string
         instagramHandle:
