@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: |
-    This the backend server for HostelVerse, a Hostel Management System. 
+    This the backend server for HostelVerse, a Hostel Management System.
     Tech Stack: Typescript, Azure Functions, Azure CosmosDB
   version: "1.0.0"
   title: Hostelverse-Backend
@@ -32,7 +32,7 @@ paths:
         '200':
           description: Student Created Successfully
   /createAdmin:
-    post: 
+    post:
       tags:
         - signup
       summary: Create Admin Account
@@ -50,9 +50,9 @@ paths:
     post:
       tags:
         - admin
-      summary: Create Hostel 
+      summary: Create Hostel
       operationId: createHostel
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/CreateHostelInput'
@@ -82,14 +82,14 @@ paths:
           description: Logged In Successfully!
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: '#/components/schemas/LoginResponse'
   /createWarden:
     post:
-      tags: 
+      tags:
         - admin
       summary: Create Warden Account
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/CreateWardenInput'
@@ -106,8 +106,8 @@ paths:
     post:
       tags:
         - admin
-      summary: Create Room 
-      security: 
+      summary: Create Room
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/CreateRoomInput'
@@ -125,7 +125,7 @@ paths:
       tags:
         - student
       summary: Create a Room Issue
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/CreateRoomIssueInput'
@@ -140,9 +140,9 @@ paths:
           description: Room Issue Created Successfully
   /createFeedback:
     post:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       summary: Create Feedback for a Hostel
       requestBody:
@@ -158,9 +158,9 @@ paths:
           description: Feedback Created Successfully
   /createLeaveApplication:
     post:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
       - bearerAuth: []
       summary: Create a Leave Application
       requestBody:
@@ -176,7 +176,7 @@ paths:
           description: Leave Application Created Successfully
   /student/verifyemail:
     post:
-      tags: 
+      tags:
         - student
       summary: Verify Email to get Email activated
       requestBody:
@@ -190,7 +190,7 @@ paths:
           description: Account Activated Successfully
   /deleteWarden:
     post:
-      security: 
+      security:
         - bearerAuth: []
       tags:
         - admin
@@ -208,12 +208,12 @@ paths:
           description: Warden Deleted Successfully
   /getAnnouncements:
     get:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       summary: Get announcements of your hostel
-      parameters: 
+      parameters:
         - in: query
           name: studentid
           schema:
@@ -230,15 +230,15 @@ paths:
           description: Announcements
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Announcement'
   /createAnnouncement:
     post:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       summary: Create an annoucement for the hostel
       requestBody:
@@ -254,12 +254,12 @@ paths:
           description: Annoucemnet Created Successfully
   /getStudent:
     get:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       summary: Get Students details
-      parameters: 
+      parameters:
         - in: query
           name: studentid
           schema:
@@ -280,18 +280,18 @@ paths:
           description: Student List
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Student'
   /getStudentProfile:
     get:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       summary: Get the profile for a student
-      parameters: 
+      parameters:
         - in: query
           name: studentid
           schema:
@@ -308,16 +308,16 @@ paths:
           description: Student Profile
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: '#/components/schemas/Student'
   /getWarden:
     get:
-      tags: 
+      tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
       summary: Get the Wardens Information
-      parameters: 
+      parameters:
         - in: query
           name: wardenid
           schema:
@@ -333,29 +333,29 @@ paths:
           description: Warden List
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Warden'
   /hostelList:
     get:
-      tags: 
+      tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
       summary: Get the Hostels Information
-      parameters: 
+      parameters:
         - in: query
           name: hostelid
           schema:
             type: string
         - in: query
           name: low
-          schema: 
+          schema:
             type: integer
         - in: query
           name: high
-          schema: 
+          schema:
             type: integer
       responses:
         '400':
@@ -368,17 +368,17 @@ paths:
           description: Hostel List
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Hostel'
   /getFeedback:
     get:
-      tags: 
+      tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
-      parameters: 
+      parameters:
         - in: query
           name: feedbackid
           schema:
@@ -395,18 +395,18 @@ paths:
           description: Feedback List
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Feedback'
   /getLeaveApplications:
     get:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       description: Provide studentid to view the Leave Application of that student in the warden's hostel otherwise displays all the leave applications in the warden's hostel
-      parameters: 
+      parameters:
         - in: query
           name: wardenid
           schema:
@@ -427,18 +427,18 @@ paths:
           description: Leave Application List
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/LeaveApplication'
   /getRoomIssue:
     get:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       description: Provide roomissueid to get a specifc room issue in the warden's hostel. Otherwise returns the full list of room issues
-      parameters: 
+      parameters:
         - in: query
           name: wardenid
           schema:
@@ -459,15 +459,15 @@ paths:
           description: Room Issue List
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/RoomIssue'
   /resolveRoomIssue:
     post:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/UpdateRoomIssue'
@@ -482,9 +482,9 @@ paths:
           description: Room Issue Updated Successfully
   /updateLeaveApplication:
     post:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/UpdateLeaveApplication'
@@ -499,9 +499,9 @@ paths:
           description: Leave Application Updated Successfully
   /allotHostel:
     post:
-      tags: 
+      tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/AllotHostelInput'
@@ -516,9 +516,9 @@ paths:
           description: Hostel Alloted Successfully
   /checkin:
     post:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/CheckInInput'
@@ -533,9 +533,9 @@ paths:
           description: Checked In Successfully
   /checkout:
     post:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/CheckOutInput'
@@ -552,9 +552,9 @@ paths:
     get:
       tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
-      parameters: 
+      parameters:
         - in: query
           name: wardenid
           schema:
@@ -571,15 +571,15 @@ paths:
           description: Warden Profile
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: '#/components/schemas/Warden'
   /getAdminProfile:
     get:
       tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
-      parameters: 
+      parameters:
         - in: query
           name: adminid
           schema:
@@ -596,13 +596,13 @@ paths:
           description: Admin Profile
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: '#/components/schemas/Admin'
   /getAdminDashboard:
     get:
-      tags: 
+      tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
       responses:
         '400':
@@ -619,12 +619,12 @@ paths:
                 $ref: '#/components/schemas/AdminDashboardResponse'
   /getRoomDetails:
     get:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       description: Enter the roomid query param to get the room details of a particular room in the warden's hostel. Otherwise returns the room details of all the rooms in the hostel. Returns a single object in the data field if roomid is specified. Otherwise returns an array of room detail objects
-      parameters: 
+      parameters:
         - in: query
           name: wardenid
           schema:
@@ -649,11 +649,11 @@ paths:
                 $ref: '#/components/schemas/RoomDetailResponse'
   /getStudentAttendence:
     get:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
-      parameters: 
+      parameters:
         - in: query
           name: wardenid
           schema:
@@ -674,11 +674,11 @@ paths:
                 $ref: '#/components/schemas/StudentAttendenceResponse'
   /removeStudent:
     get:
-      tags: 
+      tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
-      parameters: 
+      parameters:
         - in: query
           name: studentid
           schema:
@@ -695,12 +695,12 @@ paths:
           description: Student Deleted Successfully
   /getStudentRoomIssue:
     get:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       summary: Get the room issue of that student
-      parameters: 
+      parameters:
         - in: query
           name: studentid
           schema:
@@ -723,12 +723,12 @@ paths:
                   $ref: '#/components/schemas/RoomIssue'
   /getStudentLeaveApplication:
     get:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       summary: Get the leave application of that student
-      parameters: 
+      parameters:
         - in: query
           name: studentid
           schema:
@@ -749,10 +749,10 @@ paths:
                   $ref: '#/components/schemas/LeaveApplication'
   /resendOTP:
     get:
-      tags: 
+      tags:
         - signup
-      summary: Resend OTP 
-      parameters: 
+      summary: Resend OTP
+      parameters:
         - in: query
           name: email
           schema:
@@ -773,10 +773,10 @@ paths:
         - student
         - warden
         - admin
-      security: 
+      security:
         - bearerAuth: []
       summary: Upload Profile Picture
-      parameters: 
+      parameters:
         - in: query
           name: filename
           description: filename(set it equal to the id of the student, warden, admin)
@@ -813,10 +813,10 @@ paths:
     post:
       tags:
         - admin
-      security: 
+      security:
         - bearerAuth: []
       summary: Upload Hostel Picture
-      parameters: 
+      parameters:
         - in: query
           name: filename
           description: filename(set it equal to the id of the hostel)
@@ -846,9 +846,9 @@ paths:
           description: Hostel Pic Updated Successfully
   /updateStudentProfile:
     post:
-      tags: 
+      tags:
         - student
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/UpdateStudentProfileInput'
@@ -865,9 +865,9 @@ paths:
                 $ref: '#/components/schemas/Student'
   /updateWardenProfile:
     post:
-      tags: 
+      tags:
         - warden
-      security: 
+      security:
         - bearerAuth: []
       requestBody:
         $ref: '#/components/requestBodies/UpdateWardenProfileInput'
@@ -883,7 +883,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Warden'
   /requestResetPassword:
-    get:  
+    get:
       tags:
         - admin
         - warden
@@ -951,12 +951,12 @@ components:
         resetPasswordToken:
           type: string
           nullable: true
-        resetPasswordExpires: 
+        resetPasswordExpires:
           type: string
           nullable: true
-        batch: 
+        batch:
           type: string
-        role: 
+        role:
           type: string
           default: student
         active:
@@ -971,11 +971,11 @@ components:
               type: string
             studentid:
               type: string
-            role: 
+            role:
               type: string
-            gender: 
+            gender:
               type: string
-            email: 
+            email:
               type: string
             contactno:
               type: string
@@ -986,16 +986,16 @@ components:
       properties:
         wardenid:
           type: string
-        name: 
+        name:
           type: string
-        email: 
+        email:
           type: string
-        password: 
+        password:
           type: string
         resetPasswordToken:
           type: string
           nullable: true
-        resetPasswordExpires: 
+        resetPasswordExpires:
           type: string
           nullable: true
         role:
@@ -1003,14 +1003,14 @@ components:
           default: Warden
         hostelid:
           type: string
-        profile: 
+        profile:
           type: object
           properties:
-            name: 
+            name:
               type: string
-            email: 
+            email:
               type: string
-            contactno: 
+            contactno:
               type: string
     Admin:
       type: object
@@ -1026,7 +1026,7 @@ components:
         resetPasswordToken:
           type: string
           nullable: true
-        resetPasswordExpires: 
+        resetPasswordExpires:
           type: string
           nullable: true
         role:
@@ -1035,11 +1035,11 @@ components:
         profile:
           type: object
           properties:
-            name: 
+            name:
               type: string
-            email: 
+            email:
               type: string
-            contactno: 
+            contactno:
               type: string
     Hostel:
       type: object
@@ -1050,7 +1050,7 @@ components:
           type: string
         location:
           type: string
-        wardenid: 
+        wardenid:
           type: string
           nullable: true
         description:
@@ -1058,31 +1058,31 @@ components:
         totalCapacity:
           type: integer
           format: int32
-        singleRooms: 
+        singleRooms:
           type: integer
           format: int32
           default: 0
-        doubleRooms: 
+        doubleRooms:
           type: integer
           format: int32
           default: 0
-        tripleRooms: 
+        tripleRooms:
           type: integer
           format: int32
           default: 0
-        singleRoomsLeft: 
+        singleRoomsLeft:
           type: integer
           format: int32
-        doubleRoomsLeft: 
+        doubleRoomsLeft:
           type: integer
           format: int32
-        tripleRoomsLeft: 
+        tripleRoomsLeft:
           type: integer
           format: int32
-        fees: 
+        fees:
           type: integer
           format: int32
-        overallRating: 
+        overallRating:
           type: number
           format: float
         numberOfReviews:
@@ -1117,7 +1117,7 @@ components:
           type: string
         remarks:
           type: string
-        created_at: 
+        created_at:
           type: string
           format: date-time
         status:
@@ -1129,14 +1129,14 @@ components:
       properties:
         studentid:
           type: string
-        hostelid: 
+        hostelid:
           type: string
         message:
           type: string
         date_from:
           type: string
           format: date-time
-        date_to: 
+        date_to:
           type: string
           format: date-time
         status:
@@ -1156,23 +1156,23 @@ components:
           type: string
         name:
           type: string
-        hostelid: 
+        hostelid:
           type: number
         message:
           type: string
-        rating: 
+        rating:
           type: number
           format: float
     Attendence:
       type: object
       properties:
-        studentid: 
+        studentid:
           type: string
-        last_checkin: 
+        last_checkin:
           type: string
           format: date-time
           nullable: true
-        last_checkout: 
+        last_checkout:
           type: string
           format: date-time
           nullable: true
@@ -1190,19 +1190,19 @@ components:
     CreateStudentInput:
       type: object
       properties:
-        studentid: 
+        studentid:
           type: string
-        email: 
+        email:
           type: string
-        password: 
+        password:
           type: string
-        name: 
+        name:
           type: string
-        gender: 
+        gender:
           type: string
-        contactno: 
+        contactno:
           type: string
-        location: 
+        location:
           type: string
     CreateHostelInput:
       type: object
@@ -1213,79 +1213,79 @@ components:
           type: string
         location:
           type: string
-        wardenid: 
+        wardenid:
           type: string
         description:
           type: string
         totalCapacity:
           type: integer
           format: int32
-        singleRooms: 
+        singleRooms:
           type: integer
           format: int32
           default: 0
-        doubleRooms: 
+        doubleRooms:
           type: integer
           format: int32
           default: 0
-        tripleRooms: 
+        tripleRooms:
           type: integer
           format: int32
           default: 0
-        fees: 
+        fees:
           type: integer
           format: int32
     AdminSignupInput:
       type: object
-      properties: 
-        name: 
+      properties:
+        name:
           type: string
-        email: 
+        email:
           type: string
-        password: 
+        password:
           type: string
-        contactno: 
+        contactno:
           type: string
-        adminid: 
+        adminid:
           type: string
     VerifyEmailInput:
       type: object
-      properties: 
+      properties:
         email:
           type: string
-        code: 
+        code:
           type: integer
           format: int32
     LoginInput:
       type: object
-      properties: 
+      properties:
         email:
           type: string
-        password: 
+        password:
           type: string
     CreateWardenInput:
       type: object
-      properties: 
+      properties:
         wardenid:
           type: string
-        email: 
+        email:
           type: string
-        password: 
+        password:
           type: string
-        name: 
+        name:
           type: string
         contactno:
           type: string
-        hostelid: 
+        hostelid:
           type: string
     CreateRoomInput:
       type: object
-      properties: 
+      properties:
         hostelid:
           type: string
-        roomno: 
+        roomno:
           type: string
-        type: 
+        type:
           type: string
           enum: [single, double, triple]
           description: Specify the room type
@@ -1296,20 +1296,20 @@ components:
     CreateRoomIssueInput:
       type: object
       properties:
-        studentid: 
+        studentid:
           type: string
-        remarks: 
+        remarks:
           type: string
     CreateFeedbackInput:
       type: object
-      properties: 
+      properties:
         hostelid:
           type: string
-        studentid: 
+        studentid:
           type: string
         name:
           type: string
-        rating: 
+        rating:
           type: integer
           format: int32
         message:
@@ -1317,24 +1317,24 @@ components:
     CreateLeaveApplicationInput:
       type: object
       properties:
-        studentid: 
+        studentid:
           type: string
-        date_from: 
+        date_from:
           type: string
           format: date-time
         date_to:
           type: string
           format: date-time
-        message: 
+        message:
           type: string
     CreateAnnoucementInput:
       type: object
       properties:
-        wardenid: 
+        wardenid:
           type: string
         heading:
           type: string
-        message: 
+        message:
           type: string
     DeleteWardenInput:
       type: object
@@ -1344,7 +1344,9 @@ components:
     UpdateRoomIssue:
       type: object
       properties:
-        hosteldid: 
+        id:
+          type: string
+        hosteldid:
           type: string
         roomno:
           type: string
@@ -1362,15 +1364,15 @@ components:
     UpdateLeaveApplication:
       type: object
       properties:
-        studentid: 
+        studentid:
           type: string
-        wardenid: 
+        wardenid:
           type: string
-        name: 
+        name:
           type: string
-        status: 
+        status:
           type: string
-        remarks: 
+        remarks:
           type: string
     AllotHostelInput:
       type: object
@@ -1379,30 +1381,30 @@ components:
           type: array
           items:
             type: string
-        batch: 
+        batch:
           type: array
           items:
             type: string
     CheckInInput:
       type: object
       properties:
-        studentid: 
+        studentid:
           type: string
         location:
           type: string
     CheckOutInput:
       type: object
       properties:
-        studentid: 
+        studentid:
           type: string
         location:
           type: string
     UpdateStudentProfileInput:
       type: object
-      required: 
+      required:
         - studentid
       properties:
-        studentid: 
+        studentid:
           type: string
         name:
           type: string
@@ -1422,10 +1424,10 @@ components:
           type: string
     UpdateWardenProfileInput:
       type: object
-      required: 
+      required:
         - wardenid
       properties:
-        wardenid: 
+        wardenid:
           type: string
         email:
           type: string
@@ -1436,14 +1438,14 @@ components:
       properties:
         message:
           type: string
-        profile: 
+        profile:
           type: object
-        token: 
+        token:
           type: string
     AdminDashboardResponse:
       type: object
       properties:
-        message:  
+        message:
           type: string
         data:
           type: object
@@ -1459,14 +1461,14 @@ components:
     RoomDetailResponse:
       type: object
       properties:
-        message:  
+        message:
           type: string
         data:
           type: object
     StudentAttendenceResponse:
       type: object
       properties:
-        message:  
+        message:
           type: string
         data:
           type: array
